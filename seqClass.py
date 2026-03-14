@@ -30,6 +30,6 @@ if args.motif:
     if re.search(args.motif, args.seq):
         print("FOUND-yai!")
     else:
-        print("NOT FOUND-what a fail...")
+        print("NOT FOUND-bad luck...")
 
         
