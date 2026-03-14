@@ -36,36 +36,32 @@ args.seq = args.seq.upper()
 # Converts the sequence to uppercase so validation and searches are case-insensitive.
 
 
+# Check that the sequence contains only valid IUPAC nucleotide symbols
+# This includes standard bases (A,C,G,T,U) and ambiguity codes
+if re.search('^[ACGTURYSWKMBDHVN]+$', args.seq):
 
-if re.search('^[ACGTU]+$', args.seq):
-    # Checks whether the sequence contains only valid nucleotide letters:
-    # A, C, G, T, or U.
-    # ^ and $ mean the whole string must match.
-    # + means one or more valid characters.
+    # A valid biological sequence should not contain both T and U
+    # T corresponds to DNA and U corresponds to RNA
+    if 'T' in args.seq and 'U' in args.seq:
+        print('Invalid sequence: contains both T and U')
 
-    if re.search('T', args.seq):
-        print ('The sequence is DNA')
-        # Checks whether the sequence contains only valid nucleotide letters:
-    # A, C, G, T, or U.
-    # ^ and $ mean the whole string must match.
-    # + means one or more valid characters.
+    # If T appears, classify as DNA
+    elif 'T' in args.seq:
+        print('The sequence is DNA')
 
-    elif re.search('U', args.seq):
-        print ('The sequence is RNA')
-        # If the sequence contains U (and not T, due to the previous condition),
-        # it is classified as RNA.
+    # If U appears, classify as RNA
+    elif 'U' in args.seq:
+        print('The sequence is RNA')
 
-        
+    # If neither T nor U appears, the sequence could belong to DNA or RNA
     else:
-        print ('The sequence can be DNA or RNA')
-        # If the sequence contains only A, C, and G with neither T nor U,
-        # it could belong to either DNA or RNA.
-        
+        print('The sequence can be DNA or RNA')
+
+# If characters outside the IUPAC alphabet appear, reject the sequence
 else:
-    print ('The sequence is not DNA nor RNA')
-    # If invalid characters are present, the sequence is not considered DNA or RNA.
+    print('The sequence is not a valid DNA/RNA sequence')
 
-
+    
 if args.motif:
     # This block runs only if the user provided the optional motif argument.
     
