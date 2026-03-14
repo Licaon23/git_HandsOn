@@ -1,3 +1,7 @@
+##########
+# Tool for DNA/RNA identification
+#########
+
 #!/usr/bin/env python
 # Shebang line: tells the shell to run this script with the Python interpreter
 # found in the user's environment.
