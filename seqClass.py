@@ -33,16 +33,29 @@ args.seq = args.seq.upper()                 # Note we just added this line
 
 # Check that the sequence contains only valid IUPAC nucleotide symbols
 # This includes standard bases (A,C,G,T,U) and ambiguity codes
-if re.search('^[ACGTU]+$', args.seq):
+if re.search('^[ACGTURYSWKMBDHVN]+$', args.seq):
 
-    if re.search('T', args.seq):
-        print ('The sequence is DNA')
-    elif re.search('U', args.seq):
-        print ('The sequence is RNA')
+    # A valid biological sequence should not contain both T and U
+    # T corresponds to DNA and U corresponds to RNA
+    if 'T' in args.seq and 'U' in args.seq:
+        print('Invalid sequence: contains both T and U')
+
+    # If T appears, classify as DNA
+    elif 'T' in args.seq:
+        print('The sequence is DNA')
+
+    # If U appears, classify as RNA
+    elif 'U' in args.seq:
+        print('The sequence is RNA')
+
+    # If neither T nor U appears, the sequence could belong to DNA or RNA
     else:
-        print ('The sequence can be DNA or RNA')
+        print('The sequence can be DNA or RNA')
+
+# If characters outside the IUPAC alphabet appear, reject the sequence
 else:
-    print ('The sequence is not DNA nor RNA')
+    print('The sequence is not a valid DNA/RNA sequence')
+
 
 if args.motif:
     # This block runs only if the user provided the optional motif argument.
