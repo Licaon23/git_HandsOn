@@ -15,8 +15,31 @@ args = parser.parse_args()
 
 args.seq = args.seq.upper()
 
-if all(base in "ACGT" for base in args.seq):
+if args.seq == "":
+    print("Invalid sequence: empty sequence")
 
+elif not all(base in "ACGTU" for base in args.seq):
+    print("Invalid sequence: contains characters outside A, C, G, T, U")
+
+elif "T" in args.seq and "U" in args.seq:
+    print("Invalid sequence: contains both T and U")
+
+elif "U" in args.seq:
+    print("The sequence is RNA")
+
+    total_length = len(args.seq)
+
+    a_percentage = args.seq.count("A") / total_length * 100
+    c_percentage = args.seq.count("C") / total_length * 100
+    g_percentage = args.seq.count("G") / total_length * 100
+    u_percentage = args.seq.count("U") / total_length * 100
+
+    print("A:", round(a_percentage, 2), "%")
+    print("C:", round(c_percentage, 2), "%")
+    print("G:", round(g_percentage, 2), "%")
+    print("U:", round(u_percentage, 2), "%")
+
+else:
     print("The sequence is DNA")
 
     total_length = len(args.seq)
@@ -30,6 +53,3 @@ if all(base in "ACGT" for base in args.seq):
     print("C:", round(c_percentage, 2), "%")
     print("G:", round(g_percentage, 2), "%")
     print("T:", round(t_percentage, 2), "%")
-
-else:
-    print("Invalid DNA sequence")
